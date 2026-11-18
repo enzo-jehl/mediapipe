@@ -451,7 +451,10 @@ class FaceLandmarkerGraph : public core::ModelTaskGraph {
     if (face_detector_options.num_faces() == 1) {
       face_landmarks_detector_graph
           .GetOptions<FaceLandmarksDetectorGraphOptions>()
-          .set_smooth_landmarks(tasks_options.base_options().use_stream_mode());
+          // EXPERIMENT: One Euro smoothing disabled (was
+          // `tasks_options.base_options().use_stream_mode()`). Tracking in
+          // stream mode is unchanged.
+          .set_smooth_landmarks(false);
     } else if (face_detector_options.num_faces() > 1 &&
                face_landmarks_detector_graph
                    .GetOptions<FaceLandmarksDetectorGraphOptions>()
